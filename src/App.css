@@ -1,0 +1,108 @@
+.cv-form-container {
+  margin: 20px;
+}
+
+.cv-form {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* PdfExtractor.css */
+.pdf-extractor-container {
+  margin: 20px;
+}
+
+.dropzone {
+  text-align: center;
+  border: 2px dotted gray;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: #f8f8f8;
+}
+
+.dropzone-text {
+  font-style: normal;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.extracted-data-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.extracted-data {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.upload-button {
+  border: 2px solid #3498db;
+  padding: 5px 20px;
+  border-radius: 4px;
+  background-color: #3498db;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
