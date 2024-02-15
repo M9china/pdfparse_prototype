@@ -101,13 +101,14 @@ def process_cv(pdf_file):
 
 
     # Education information
-    education_pattern = re.compile(r'Bachelor of Science in Computer Science - (.+), Graduated (.+)\no Relevant Coursework: (.+)')
+    education_pattern = re.compile(r'Education\s*\n•\s*([^•]+?) - (.+), Graduated (.+)\no Relevant Coursework: (.+)')
     match_education = education_pattern.search(text)
     if match_education:
-        cv_data["education"]["degree"] = "Bachelor of Science in Computer Science"
-        cv_data["education"]["institution"] = match_education.group(1)
-        cv_data["education"]["graduationDate"] = match_education.group(2)
-        cv_data["education"]["relevantCoursework"] = [course.strip() for course in match_education.group(3).split(',')]
+        cv_data["education"]["degree"] = match_education.group(1).strip()
+        cv_data["education"]["institution"] = match_education.group(2).strip()
+        cv_data["education"]["graduationDate"] = match_education.group(3).strip()
+        cv_data["education"]["relevantCoursework"] = [course.strip() for course in match_education.group(4).split(',')]
+
 
     # Experience information
     experience_pattern = re.compile(r'([^•]+) - (.+), (.+) \((.+) - (.+)\)\n• (.+)')
@@ -132,14 +133,15 @@ def process_cv(pdf_file):
         cv_data["skills"]["softSkills"] = [skill.strip() for skill in match_technical_skills.group(2).split(',')]
 
     # Certifications information
-    certifications_pattern = re.compile(r'Certified Full Stack Web Developer - (.+), (\d{4})')
+    certifications_pattern = re.compile(r'Certifications\s*\n•\s*([^•]+?)\s*-\s*([^,]+),\s*(\d{4})')
     match_certifications = certifications_pattern.search(text)
     if match_certifications:
         cv_data["certifications"] = {
-            "title": "Certified Full Stack Web Developer",
-            "issuer": match_certifications.group(1),
-            "year": match_certifications.group(2)
+            "title": match_certifications.group(1).strip(),
+            "issuer": match_certifications.group(2).strip(),
+            "year": match_certifications.group(3)
         }
+
 
     # Projects information
     projects_pattern = re.compile(r'(.+) \((.+ - .+)\)\n• (.+)\n• Technologies used: (.+)')
