@@ -14,10 +14,7 @@ cv_template = {
     },
     "objective": "",
     "education": {
-        "degree": "",
-        "institution": "",
-        "graduationDate": "",
-        "relevantCoursework": []
+
     },
     "experience": [
         {
@@ -33,11 +30,7 @@ cv_template = {
         "softSkills": []
     },
     "certifications": [
-        {
-            "title": "",
-            "issuer": "",
-            "year": ""
-        }
+
     ],
     "projects": [
         {
@@ -111,36 +104,41 @@ def process_cv(pdf_file):
 
 
     # Experience information
-    experience_pattern = re.compile(r'([^•]+) - (.+), (.+) \((.+) - (.+)\)\n• (.+)')
-    match_experience = experience_pattern.findall(text)
-    if match_experience:
-        cv_data["experience"] = [
-            {
-                "title": entry[0],
-                "company": entry[1],
-                "location": entry[2],
-                "duration": f"{entry[3]} - {entry[4]}",
-                "responsibilities": [responsibility.strip() for responsibility in entry[5].split('•')]
-            }
-            for entry in match_experience
-        ]
+    experience_pattern = re.compile(r'Experience\s*\n([^•]+) - (.+), (.+) \((.+) - (.+)\)\n• (.+)')
+    match_experience = experience_pattern.search(text)
 
-    # Technical skills
-    technical_skills_pattern = re.compile(r'Technical Skills\n• Technical Skills: (.+)\n• Soft Skills: (.+)')
-    match_technical_skills = technical_skills_pattern.search(text)
-    if match_technical_skills:
-        cv_data["skills"]["technicalSkills"] = [skill.strip() for skill in match_technical_skills.group(1).split(',')]
-        cv_data["skills"]["softSkills"] = [skill.strip() for skill in match_technical_skills.group(2).split(',')]
+    if match_experience:
+        cv_data["experience"] = {
+            "title": match_experience.group(1).strip(),
+            "company": match_experience.group(2).strip(),
+            "location": match_experience.group(3).strip(),
+            "duration": f"{match_experience.group(4)} - {match_experience.group(5)}",
+            "responsibilities": [responsibility.strip() for responsibility in match_experience.group(6).split('•')]
+        }
+
+    # Skills information
+    skills_pattern = re.compile(r'Skills\s*\n•\s*Technical Skills: (.+)\n•\s*Soft Skills: (.+)')
+    match_skills = skills_pattern.search(text)
+
+    if match_skills:
+        cv_data["skills"]["technicalSkills"] = [skill.strip() for skill in match_skills.group(1).split(',')]
+        cv_data["skills"]["softSkills"] = [skill.strip() for skill in match_skills.group(2).split(',')]
+
 
     # Certifications information
     certifications_pattern = re.compile(r'Certifications\s*\n•\s*([^•]+?)\s*-\s*([^,]+),\s*(\d{4})')
-    match_certifications = certifications_pattern.search(text)
+    match_certifications = certifications_pattern.findall(text)
+
     if match_certifications:
-        cv_data["certifications"] = {
-            "title": match_certifications.group(1).strip(),
-            "issuer": match_certifications.group(2).strip(),
-            "year": match_certifications.group(3)
-        }
+        cv_data["certifications"] = [
+            {
+                "title": entry[0].strip(),
+                "issuer": entry[1].strip(),
+                "year": entry[2]
+            }
+            for entry in match_certifications
+        ]
+
 
 
     # Projects information
@@ -158,7 +156,7 @@ def process_cv(pdf_file):
         ]
 
     # Volunteer experience information
-    volunteer_pattern = re.compile(r'Volunteer Web Developer - (.+), (.+) \((.+) - (.+)\)\no (.+)')
+    volunteer_pattern = re.compile(r'Volunteer Experience \s*\n•\s*([^•]+?) - (.+), Volunteer Web Developer (.+)\no Developed a volunteer management web application (.+)')
     match_volunteer = volunteer_pattern.findall(text)
     if match_volunteer:
         cv_data["volunteerExperience"] = [
