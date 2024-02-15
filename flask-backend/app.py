@@ -92,7 +92,6 @@ def process_cv(pdf_file):
         cv_data["personalInformation"]["linkedIn"] = match_personal_info.group(5).strip()
 
 
-
     # Education information
     education_pattern = re.compile(r'Education\s*\n•\s*([^•]+?) - (.+), Graduated (.+)\no Relevant Coursework: (.+)')
     match_education = education_pattern.search(text)
@@ -120,14 +119,15 @@ def process_cv(pdf_file):
         ]
 
 
-
     # Skills information
-    skills_pattern = re.compile(r'Skills\s*\n•\s*Technical Skills: (.+)\n•\s*Soft Skills: (.+)')
+    skills_pattern = re.compile(r'Skills\s*\n•\sTechnical Skills: (.+?)\n•\s*Soft Skills: (.+?)', re.DOTALL)
     match_skills = skills_pattern.search(text)
 
     if match_skills:
         cv_data["skills"]["technicalSkills"] = [skill.strip() for skill in match_skills.group(1).split(',')]
         cv_data["skills"]["softSkills"] = [skill.strip() for skill in match_skills.group(2).split(',')]
+
+
 
 
     # Certifications information
@@ -143,7 +143,6 @@ def process_cv(pdf_file):
             }
             for entry in match_certifications
         ]
-
 
 
     # Projects information
