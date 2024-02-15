@@ -120,7 +120,7 @@ def process_cv(pdf_file):
 
 
     # Skills information
-    skills_pattern = re.compile(r'Skills\s*\n•\sTechnical Skills: (.+?)\n•\s*Soft Skills: (.+?)', re.DOTALL)
+    skills_pattern = re.compile(r'Skills\s*\n•\sTechnical Skills: (.+?)\n•\s*Soft Skills: (.+?)\n', re.DOTALL)
     match_skills = skills_pattern.search(text)
 
     if match_skills:

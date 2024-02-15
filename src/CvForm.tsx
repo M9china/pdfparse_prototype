@@ -4,8 +4,8 @@ import './App.css';
 interface CvFormProps {
   education: {
     degree: string;
-    lastAttended: string;
-    university: string;
+    graduationDate: string;
+    institution: string;
   };
   personalInformation: {
     address: string;
@@ -27,11 +27,11 @@ export const CvForm: React.FC<CvFormProps> = ({ education, personalInformation }
           </div>
           <div className="form-group">
             <label>Graduated:</label>
-            <input type="text" value={education.lastAttended} readOnly />
+            <input type="text" value={education.graduationDate} readOnly />
           </div>
           <div className="form-group">
             <label>University:</label>
-            <input type="text" value={education.university} readOnly />
+            <input type="text" value={education.institution} readOnly />
           </div>
         </div>
 
