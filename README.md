@@ -3,11 +3,6 @@
 
 This project is meant to allow users to upload pdf documents, abstract the contents, parse into json format and populate the form fields with corresponding information.
 
-## Introduction
-
-The induction process at Witwatersrand University is crucial for welcoming new employees and ensuring they are integrated smoothly into the organization. However, traditional onboarding methods may not always be engaging or effective in retaining information. Wits Gamification aims to address this challenge by leveraging gamification techniques to make the onboarding process more interactive and enjoyable for employees.
-
-
 ## Installation
 
 Follow these steps:
