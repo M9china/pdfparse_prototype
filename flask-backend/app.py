@@ -146,7 +146,7 @@ def process_cv(pdf_file):
 
 
     # Projects information
-    projects_pattern = re.compile(r'(.+) \((.+ - .+)\)\n• (.+)\n• Technologies used: (.+)')
+    projects_pattern = re.compile(r'(.+) \((.+ - .+)\)\n• (.+)\n• Technologies used: (.+)', re.DOTALL)
     match_projects = projects_pattern.findall(text)
     if match_projects:
         cv_data["projects"] = [
