@@ -182,7 +182,7 @@ def process_cv(pdf_file):
         cv_data["interests"] = [interest.strip() for interest in match_interests.group(1).split(',')]
 
     # References information
-    references_pattern = re.compile(r'References\n• (.+)')
+    references_pattern = re.compile(r'References\s*\n•\s*(.+)')
     match_references = references_pattern.search(text)
     if match_references:
         cv_data["references"] = match_references.group(1).strip()
