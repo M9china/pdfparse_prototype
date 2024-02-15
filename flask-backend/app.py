@@ -104,17 +104,22 @@ def process_cv(pdf_file):
 
 
     # Experience information
-    experience_pattern = re.compile(r'Experience\s*\n([^•]+) - (.+), (.+) \((.+) - (.+)\)\n• (.+)')
-    match_experience = experience_pattern.search(text)
+    experience_pattern = re.compile(r'Experience\s*\n([^•]+) - (.+?), (.+?) \((.+?) - (.+?)\)\n\s+(.+?)\n', re.DOTALL)
+    match_experience = experience_pattern.findall(text)
 
     if match_experience:
-        cv_data["experience"] = {
-            "title": match_experience.group(1).strip(),
-            "company": match_experience.group(2).strip(),
-            "location": match_experience.group(3).strip(),
-            "duration": f"{match_experience.group(4)} - {match_experience.group(5)}",
-            "responsibilities": [responsibility.strip() for responsibility in match_experience.group(6).split('•')]
-        }
+        cv_data["experience"] = [
+            {
+                "title": entry[0].strip(),
+                "company": entry[1].strip(),
+                "location": entry[2].strip(),
+                "duration": f"{entry[3].strip()} - {entry[4].strip()}",
+                "responsibilities": [responsibility.strip() for responsibility in entry[5].split('\n')]
+            }
+            for entry in match_experience
+        ]
+
+
 
     # Skills information
     skills_pattern = re.compile(r'Skills\s*\n•\s*Technical Skills: (.+)\n•\s*Soft Skills: (.+)')
@@ -171,7 +176,7 @@ def process_cv(pdf_file):
         ]
 
     # Interests information
-    interests_pattern = re.compile(r'Interests\n• (.+)')
+    interests_pattern = re.compile(r'Interests\s*\n•\s*(.+)')
     match_interests = interests_pattern.search(text)
     if match_interests:
         cv_data["interests"] = [interest.strip() for interest in match_interests.group(1).split(',')]
